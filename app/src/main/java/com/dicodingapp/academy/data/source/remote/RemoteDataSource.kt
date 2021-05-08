@@ -5,6 +5,7 @@ import android.os.Looper
 import com.dicodingapp.academy.data.source.remote.reponse.ContentResponse
 import com.dicodingapp.academy.data.source.remote.reponse.CourseResponse
 import com.dicodingapp.academy.data.source.remote.reponse.ModuleResponse
+import com.dicodingapp.academy.utils.EspressoIdlingResource
 import com.dicodingapp.academy.utils.JsonHelper
 
 class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
@@ -24,22 +25,34 @@ class RemoteDataSource private constructor(private val jsonHelper: JsonHelper) {
     }
 
     fun getAllCourses(callback: LoadCoursesCallback) {
+        EspressoIdlingResource.increment()
         handler.postDelayed(
-            { callback.onAllCoursesReceived(jsonHelper.loadCourses()) },
+            {
+                callback.onAllCoursesReceived(jsonHelper.loadCourses())
+                EspressoIdlingResource.decrement()
+            },
             SERVICE_LATENCY_IN_MILLIS
         )
     }
 
     fun getModules(courseId: String, callback: LoadModulesCallback) {
+        EspressoIdlingResource.increment()
         handler.postDelayed(
-            { callback.onAllModulesReceived(jsonHelper.loadModule(courseId)) },
+            {
+                callback.onAllModulesReceived(jsonHelper.loadModule(courseId))
+                EspressoIdlingResource.decrement()
+            },
             SERVICE_LATENCY_IN_MILLIS
         )
     }
 
     fun getContent(moduleId: String, callback: LoadContentCallback) {
+        EspressoIdlingResource.increment()
         handler.postDelayed(
-            { callback.onContentReceived(jsonHelper.loadContent(moduleId)) },
+            {
+                callback.onContentReceived(jsonHelper.loadContent(moduleId))
+                EspressoIdlingResource.decrement()
+            },
             SERVICE_LATENCY_IN_MILLIS
         )
     }
