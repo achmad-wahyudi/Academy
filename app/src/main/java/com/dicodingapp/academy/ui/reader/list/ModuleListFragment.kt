@@ -14,7 +14,6 @@ import com.dicodingapp.academy.databinding.FragmentModuleListBinding
 import com.dicodingapp.academy.ui.reader.CourseReaderActivity
 import com.dicodingapp.academy.ui.reader.CourseReaderCallback
 import com.dicodingapp.academy.ui.reader.CourseReaderViewModel
-import com.dicodingapp.academy.utils.DataDummy
 import com.dicodingapp.academy.viewmodel.ViewModelFactory
 
 class ModuleListFragment : Fragment(), MyAdapterClickListener {
@@ -44,7 +43,12 @@ class ModuleListFragment : Fragment(), MyAdapterClickListener {
         val factory = ViewModelFactory.getInstance(requireActivity())
         viewModel = ViewModelProvider(requireActivity(), factory)[CourseReaderViewModel::class.java]
         adapter = ModuleListAdapter(this)
-        populateRecyclerView(viewModel.getModules())
+
+        fragmentModuleListBinding.progressBar.visibility = View.VISIBLE
+        viewModel.getModules().observe(viewLifecycleOwner, { modules ->
+            fragmentModuleListBinding.progressBar.visibility = View.GONE
+            populateRecyclerView(modules)
+        })
     }
 
     override fun onAttach(context: Context) {
