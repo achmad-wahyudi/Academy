@@ -14,6 +14,7 @@ import com.dicodingapp.academy.data.CourseEntity
 import com.dicodingapp.academy.databinding.ActivityDetailCourseBinding
 import com.dicodingapp.academy.databinding.ContentDetailCourseBinding
 import com.dicodingapp.academy.ui.reader.CourseReaderActivity
+import com.dicodingapp.academy.viewmodel.ViewModelFactory
 
 class DetailCourseActivity : AppCompatActivity() {
 
@@ -34,9 +35,10 @@ class DetailCourseActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         val adapter = DetailCourseAdapter()
 
+        val factory = ViewModelFactory.getInstance(this)
         val viewModel = ViewModelProvider(
             this,
-            ViewModelProvider.NewInstanceFactory()
+            factory
         )[DetailCourseViewModel::class.java]
 
         val extras = intent.extras

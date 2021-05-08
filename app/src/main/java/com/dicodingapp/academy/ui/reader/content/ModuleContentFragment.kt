@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicodingapp.academy.data.ModuleEntity
 import com.dicodingapp.academy.databinding.FragmentModuleContentBinding
 import com.dicodingapp.academy.ui.reader.CourseReaderViewModel
+import com.dicodingapp.academy.viewmodel.ViewModelFactory
 
 class ModuleContentFragment : Fragment() {
 
@@ -32,9 +33,10 @@ class ModuleContentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (activity != null) {
+            val factory = ViewModelFactory.getInstance(requireActivity())
             val viewModel = ViewModelProvider(
                 requireActivity(),
-                ViewModelProvider.NewInstanceFactory()
+                factory
             )[CourseReaderViewModel::class.java]
             val module = viewModel.getSelectedModule()
             populateWebView(module)
