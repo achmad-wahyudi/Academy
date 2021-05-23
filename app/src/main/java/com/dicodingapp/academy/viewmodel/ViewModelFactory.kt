@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicodingapp.academy.Injection
-import com.dicodingapp.academy.data.source.AcademyRepository
+import com.dicodingapp.academy.data.AcademyRepository
 import com.dicodingapp.academy.ui.academy.AcademyViewModel
 import com.dicodingapp.academy.ui.bookmark.BookmarkViewModel
 import com.dicodingapp.academy.ui.detail.DetailCourseViewModel

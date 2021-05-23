@@ -3,8 +3,8 @@ package com.dicodingapp.academy.ui.bookmark
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.dicodingapp.academy.data.CourseEntity
-import com.dicodingapp.academy.data.source.AcademyRepository
+import com.dicodingapp.academy.data.source.local.entity.CourseEntity
+import com.dicodingapp.academy.data.AcademyRepository
 import com.dicodingapp.academy.utils.DataDummy
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull

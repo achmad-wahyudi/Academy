@@ -8,48 +8,41 @@ import androidx.core.app.ShareCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicodingapp.academy.R
-import com.dicodingapp.academy.data.CourseEntity
+import com.dicodingapp.academy.data.source.local.entity.CourseEntity
 import com.dicodingapp.academy.databinding.FragmentBookmarkBinding
 import com.dicodingapp.academy.viewmodel.ViewModelFactory
 
 class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
 
-    lateinit var fragmentBookmarkBinding: FragmentBookmarkBinding
+    private var _fragmentBookmarkBinding: FragmentBookmarkBinding? = null
+    private val binding get() = _fragmentBookmarkBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
-        fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
-        return fragmentBookmarkBinding.root
+        _fragmentBookmarkBinding = FragmentBookmarkBinding.inflate(inflater, container, false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         if (activity != null) {
             val factory = ViewModelFactory.getInstance(requireActivity())
-            val viewModel = ViewModelProvider(
-                this,
-                factory
-            )[BookmarkViewModel::class.java]
+            val viewModel = ViewModelProvider(this, factory)[BookmarkViewModel::class.java]
 
             val adapter = BookmarkAdapter(this)
-
-            fragmentBookmarkBinding.progressBar.visibility = View.VISIBLE
-            viewModel.getBookmarks().observe(viewLifecycleOwner, { courses ->
-                fragmentBookmarkBinding.progressBar.visibility = View.GONE
+            binding?.progressBar?.visibility = View.VISIBLE
+            viewModel.getBookmarks().observe(requireActivity(), { courses ->
+                binding?.progressBar?.visibility = View.GONE
                 adapter.setCourses(courses)
                 adapter.notifyDataSetChanged()
             })
 
-            with(fragmentBookmarkBinding.rvBookmark) {
-                layoutManager = LinearLayoutManager(context)
-                setHasFixedSize(true)
-                this.adapter = adapter
-            }
+            binding?.rvBookmark?.layoutManager = LinearLayoutManager(context)
+            binding?.rvBookmark?.setHasFixedSize(true)
+            binding?.rvBookmark?.adapter = adapter
         }
     }
 
@@ -60,7 +53,7 @@ class BookmarkFragment : Fragment(), BookmarkFragmentCallback {
                 .from(requireActivity())
                 .setType(mimeType)
                 .setChooserTitle("Bagikan aplikasi ini sekarang.")
-                .setText(resources.getString(R.string.share_text, course.title))
+                .setText("Segera daftar kelas ${course.title} di dicoding.com")
                 .startChooser()
         }
     }

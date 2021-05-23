@@ -3,7 +3,7 @@ package com.dicodingapp.academy.ui.reader.list
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dicodingapp.academy.data.ModuleEntity
+import com.dicodingapp.academy.data.source.local.entity.ModuleEntity
 import com.dicodingapp.academy.databinding.ItemsModuleListCustomBinding
 
 class ModuleListAdapter internal constructor(private val listener: MyAdapterClickListener) :

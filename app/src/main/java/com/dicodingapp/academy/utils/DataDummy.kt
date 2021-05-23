@@ -1,7 +1,8 @@
 package com.dicodingapp.academy.utils
 
-import com.dicodingapp.academy.data.CourseEntity
-import com.dicodingapp.academy.data.ModuleEntity
+import com.dicodingapp.academy.data.source.local.entity.CourseEntity
+import com.dicodingapp.academy.data.source.local.entity.CourseWithModule
+import com.dicodingapp.academy.data.source.local.entity.ModuleEntity
 import com.dicodingapp.academy.data.source.remote.reponse.ContentResponse
 import com.dicodingapp.academy.data.source.remote.reponse.CourseResponse
 import com.dicodingapp.academy.data.source.remote.reponse.ModuleResponse
@@ -247,4 +248,8 @@ object DataDummy {
         return ContentResponse(moduleId, "This is a dummy content")
     }
 
+    fun generateDummyCourseWithModules(course: CourseEntity, bookmarked: Boolean): CourseWithModule {
+        course.bookmarked = bookmarked
+        return CourseWithModule(course, generateDummyModules(course.courseId))
+    }
 }
